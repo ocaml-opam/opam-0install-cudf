@@ -24,6 +24,7 @@ depends: [
   "cudf"
   "ocaml" {>= "4.08.0"}
   "0install-solver"
+  "alcotest" {with-test}
 ]
 build: ["dune" "build" "-p" name "-j" jobs]
 run-test: ["dune" "test" "-p" name "-j" jobs]
