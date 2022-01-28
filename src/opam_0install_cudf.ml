@@ -4,21 +4,35 @@ let tagged_with_avoid_version pkg =
     | _ -> false
   ) pkg.Cudf.pkg_extra
 
-let version_rev_compare ~prefer_oldest ~handle_avoid_version =
+let version_rev_compare ~prefer_oldest ~handle_avoid_version ~prefer_installed =
+  (* cmp ordered from least important to most important setting *)
   let cmp =
     if prefer_oldest then
       fun pkg1 pkg2 -> Int.compare pkg1.Cudf.version pkg2.Cudf.version
     else
       fun pkg1 pkg2 -> Int.compare pkg2.Cudf.version pkg1.Cudf.version
   in
-  if handle_avoid_version then
-    fun pkg1 pkg2 ->
-      match tagged_with_avoid_version pkg1, tagged_with_avoid_version pkg2 with
-      | true, true | false, false -> cmp pkg1 pkg2
-      | true, false -> 1
-      | false, true -> -1
-  else
-    cmp
+  let cmp =
+    if handle_avoid_version then
+      fun pkg1 pkg2 ->
+        match tagged_with_avoid_version pkg1, tagged_with_avoid_version pkg2 with
+        | true, true | false, false -> cmp pkg1 pkg2
+        | true, false -> 1
+        | false, true -> -1
+    else
+      cmp
+  in
+  let cmp =
+    if prefer_installed then
+      fun pkg1 pkg2 ->
+        match pkg1.Cudf.installed, pkg2.Cudf.installed with
+        | true, true | false, false -> cmp pkg1 pkg2
+        | true, false -> -1
+        | false, true -> 1
+    else
+      cmp
+  in
+  cmp
 
 module Context = struct
   type rejection = UserConstraint of Cudf_types.vpkg
@@ -90,12 +104,12 @@ type t = Context.t
 type selections = Solver.Output.t
 type diagnostics = Input.requirements   (* So we can run another solve *)
 
-let create ?(prefer_oldest=false) ?(handle_avoid_version=true) ~constraints universe =
+let create ?(prefer_oldest=false) ?(handle_avoid_version=true) ?(prefer_installed=false) ~constraints universe =
   {
     Context.universe;
     constraints;
     fresh_id = ref 0;
-    version_rev_compare = version_rev_compare ~prefer_oldest ~handle_avoid_version;
+    version_rev_compare = version_rev_compare ~prefer_oldest ~handle_avoid_version ~prefer_installed;
   }
 
 let solve context pkgs =
