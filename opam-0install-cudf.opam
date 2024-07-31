@@ -10,8 +10,9 @@ In many situations (e.g. CI, local roots or duniverse builds) this
 is not necessary, and we can get a solution much faster by using
 a different algorithm.
 
-This package uses 0install's solver algorithm with opam packages using
-the CUDF interface.
+This package provides a generic solver library which uses 0install's
+solver library. The library uses the CUDF library in order to interface
+with opam as it is the format common used to talk to all the supported solvers.
 """
 maintainer: "Kate <kit-ty-kate@outlook.com>"
 authors: "Kate <kit-ty-kate@outlook.com>"
