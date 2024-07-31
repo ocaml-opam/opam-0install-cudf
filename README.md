@@ -1,6 +1,6 @@
 * [API docs](https://ocaml-opam.github.io/opam-0install-cudf)
 
-**NOTE: opam-0install-cudf previously resided at together with opam-0install https://github.com/ocaml-opam/opam-0install-solver but has now been split into its own repository at https://github.com/ocaml-opam/opam-0install-cudf. The git history for both are the same, up until d19d6fe797d565f4df38823d8bb3df616adb6411**
+**NOTE: opam-0install-cudf previously resided at together with opam-0install at [ocaml-opam/opam-0install-solver](https://github.com/ocaml-opam/opam-0install-solver) but has now been split into its own repository at [ocaml-opam/opam-0install-cudf](https://github.com/ocaml-opam/opam-0install-cudf). The git history for both are the same, up until [d19d6fe7](https://github.com/kit-ty-kate/opam-0install-cudf/commit/d19d6fe797d565f4df38823d8bb3df616adb6411)**
 
 # Introduction
 
