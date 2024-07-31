@@ -22,9 +22,9 @@ doc: "https://ocaml-opam.github.io/opam-0install-cudf/"
 bug-reports: "https://github.com/ocaml-opam/opam-0install-cudf/issues"
 depends: [
   "dune" {>= "2.7"}
-  "cudf"
+  "cudf" {>= "0.10"}
   "ocaml" {>= "4.08.0"}
-  "0install-solver"
+  "0install-solver" {>= "2.18"}
 ]
 build: ["dune" "build" "-p" name "-j" jobs]
 run-test: ["dune" "test" "-p" name "-j" jobs]
