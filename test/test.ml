@@ -29,6 +29,11 @@ let universe =
     {Cudf.default_package with package = "f"; version = 2};
     {Cudf.default_package with package = "f"; version = 3};
     {Cudf.default_package with package = "f"; version = 4; installed = true; pkg_extra = [("avoid-version", `Int 1)]};
+
+    {Cudf.default_package with package = "g"; version = 1};
+    {Cudf.default_package with package = "g"; version = 2};
+    {Cudf.default_package with package = "g"; version = 3; installed = true; pkg_extra = [("avoid-version", `Int 1)]};
+    {Cudf.default_package with package = "g"; version = 4};
   ]
 
 let solve ?prefer_oldest ?prefer_installed req =
@@ -104,8 +109,18 @@ let prefer_installed_5 () =
 
 let prefer_installed_6 () =
   Alcotest.(check (result (list (pair string int)) string))
-    "equal" (Ok [("f", 3)])
+    "equal" (Ok [("f", 4)])
     (solve [("f", `Essential)])
+
+let prefer_installed_7 () =
+  Alcotest.(check (result (list (pair string int)) string))
+    "equal" (Ok [("g", 3)])
+    (solve ~prefer_installed:true [("g", `Essential)])
+
+let prefer_installed_8 () =
+  Alcotest.(check (result (list (pair string int)) string))
+    "equal" (Ok [("g", 4)])
+    (solve [("g", `Essential)])
 
 let () =
   Alcotest.run "cudf"
@@ -130,7 +145,9 @@ let () =
           Alcotest.test_case "normal 2" `Quick prefer_installed_2;
           Alcotest.test_case "normal 3" `Quick prefer_installed_3;
           Alcotest.test_case "normal 4" `Quick prefer_installed_4;
-          Alcotest.test_case "avoid-version=1" `Quick prefer_installed_5;
-          Alcotest.test_case "keep-installed=0, avoid-version=1" `Quick prefer_installed_6;
+          Alcotest.test_case "latest avoid-version=1" `Quick prefer_installed_5;
+          Alcotest.test_case "latest keep-installed=0, avoid-version=1" `Quick prefer_installed_6;
+          Alcotest.test_case "avoid-version=1" `Quick prefer_installed_7;
+          Alcotest.test_case "keep-installed=0, avoid-version=1" `Quick prefer_installed_8;
         ] );
     ]

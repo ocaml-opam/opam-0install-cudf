@@ -17,6 +17,8 @@ let version_rev_compare ~prefer_oldest ~handle_avoid_version ~prefer_installed =
       fun pkg1 pkg2 ->
         match tagged_with_avoid_version pkg1, tagged_with_avoid_version pkg2 with
         | true, true | false, false -> cmp pkg1 pkg2
+        | true, false when pkg1.Cudf.installed -> cmp pkg1 pkg2
+        | false, true when pkg2.Cudf.installed -> cmp pkg1 pkg2
         | true, false -> 1
         | false, true -> -1
     else

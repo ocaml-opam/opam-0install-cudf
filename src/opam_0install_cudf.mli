@@ -21,7 +21,9 @@ val create :
 
     @param handle_avoid_version if [true] the solver will try to avoid packages
     containing the [("avoid-version", `Int 1)] or [("avoid-version", `Bool true)]
-    extra property (see {!Cudf.pkg_extra}). This is [true] by default.
+    extra property (see {!Cudf.pkg_extra}). However, if a package both has
+    this property and is installed, the solver will do as if the package didn't
+    have the [avoid-version] property. This is [true] by default.
     @before 0.5 the [handle_avoid_version] parameter did not exist.
 
     @param prefer_installed if [true] the solver will try to prioritize keeping
