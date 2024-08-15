@@ -1,3 +1,20 @@
+v0.5.0 (15/08/2024)
+-------------------
+
+- Remove opam-0install (the project has been split off from opam-0install-cudf)
+
+- Avoid global mutable state. This allows the solver to be potentially called
+  multiple times without causing differences in output. (@kit-ty-kate #4)
+
+- Add support for the avoid-version flag. This is enabled by default and can be
+  disabled by setting the new `?handle_avoid_version` parameter to `false`.
+  (@kit-ty-kate #2 #3)
+
+- Add a new `?prefer_installed` parameter to encourage keeping installed
+  packages if possible. (@kit-ty-kate #3)
+
+- Add some tests (@kit-ty-kate #2 #3)
+
 v0.4.3 (28/04/2022)
 -------------------
 
