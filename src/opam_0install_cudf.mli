@@ -16,7 +16,12 @@ val create :
     @param prefer_oldest if [true] the solver is set to return the least
     up-to-date version of each package, if a solution exists. This is [false] by
     default.
-    @before 0.4 the [prefer_oldest] parameter did not exist. *)
+    @before 0.4 the [prefer_oldest] parameter did not exist.
+
+    @param handle_avoid_version if [true] the solver will try to avoid packages
+    containing the [("avoid-version", `Int 1)] or [("avoid-version", `Bool true)]
+    extra property (see {!Cudf.pkg_extra}). This is [true] by default.
+    @before 0.5 the [handle_avoid_version] parameter did not exist. *)
 
 val solve :
   t ->
